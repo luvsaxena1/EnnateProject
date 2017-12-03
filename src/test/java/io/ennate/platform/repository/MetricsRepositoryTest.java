@@ -40,6 +40,4 @@ public class MetricsRepositoryTest extends ApplicationTests {
 		List<SensorMetrics> sensorMetricsList= metricsRepository.findAll();
 		assertThat(sensorMetricsList).isNotNull();
 	}
-	
-
 }
