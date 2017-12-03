@@ -4,23 +4,17 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
-@Entity("matrics")
-public class EmmulatorDTO {
+@Entity("alert")
+public class Alert {
 
 	@Id
 	private ObjectId objectId;
 
 	private Long timeStamp;
 
-	private Integer value;
+	private Integer baseWeight;
 
-	public ObjectId getObjectId() {
-		return objectId;
-	}
-
-	public void setObjectId(ObjectId objectId) {
-		this.objectId = objectId;
-	}
+	private Integer currentWeight;
 
 	public Long getTimeStamp() {
 		return timeStamp;
@@ -30,33 +24,38 @@ public class EmmulatorDTO {
 		this.timeStamp = timeStamp;
 	}
 
-	public Integer getValue() {
-		return value;
+	public Integer getBaseWeight() {
+		return baseWeight;
 	}
 
-	public void setValue(Integer value) {
-		this.value = value;
+	public void setBaseWeight(Integer baseWeight) {
+		this.baseWeight = baseWeight;
 	}
 
-	public EmmulatorDTO() {
-		super();
-		// TODO Auto-generated constructor stub
+	public Integer getCurrentWeight() {
+		return currentWeight;
 	}
 
-	public EmmulatorDTO(ObjectId objectId, Long timeStamp, Integer value) {
-		super();
+	public void setCurrentWeight(Integer currentWeight) {
+		this.currentWeight = currentWeight;
+	}
+
+	public ObjectId getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(ObjectId objectId) {
 		this.objectId = objectId;
-		this.timeStamp = timeStamp;
-		this.value = value;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((baseWeight == null) ? 0 : baseWeight.hashCode());
+		result = prime * result + ((currentWeight == null) ? 0 : currentWeight.hashCode());
 		result = prime * result + ((objectId == null) ? 0 : objectId.hashCode());
 		result = prime * result + ((timeStamp == null) ? 0 : timeStamp.hashCode());
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
 
@@ -68,7 +67,17 @@ public class EmmulatorDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EmmulatorDTO other = (EmmulatorDTO) obj;
+		Alert other = (Alert) obj;
+		if (baseWeight == null) {
+			if (other.baseWeight != null)
+				return false;
+		} else if (!baseWeight.equals(other.baseWeight))
+			return false;
+		if (currentWeight == null) {
+			if (other.currentWeight != null)
+				return false;
+		} else if (!currentWeight.equals(other.currentWeight))
+			return false;
 		if (objectId == null) {
 			if (other.objectId != null)
 				return false;
@@ -79,16 +88,12 @@ public class EmmulatorDTO {
 				return false;
 		} else if (!timeStamp.equals(other.timeStamp))
 			return false;
-		if (value == null) {
-			if (other.value != null)
-				return false;
-		} else if (!value.equals(other.value))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "EmmulatorDTO [objectId=" + objectId + ", timeStamp=" + timeStamp + ", value=" + value + "]";
+		return "Alert [objectId=" + objectId + ", timeStamp=" + timeStamp + ", baseWeight=" + baseWeight
+				+ ", currentWeight=" + currentWeight + "]";
 	}
 }

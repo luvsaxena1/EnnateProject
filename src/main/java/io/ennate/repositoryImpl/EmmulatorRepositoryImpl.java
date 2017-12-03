@@ -24,10 +24,10 @@ public class EmmulatorRepositoryImpl extends BaseRepository<EmmulatorDTO, Object
 
 	@Override
 	public List<EmmulatorDTO> getByTimeRange(Long startTime, Long endTime) {
-		
-		Query<EmmulatorDTO> queryForEvent = datastore.createQuery(EmmulatorDTO.class);
-	    queryForEvent.field("timeStamp").greaterThanOrEq(startTime);
-	    queryForEvent.field("timeStamp").lessThan(endTime);
-	    return queryForEvent.asList();
+
+		Query<EmmulatorDTO> queryForMatrics = datastore.createQuery(EmmulatorDTO.class);
+		queryForMatrics.field("timeStamp").greaterThanOrEq(startTime);
+		queryForMatrics.field("timeStamp").lessThan(endTime);
+		return queryForMatrics.asList();
 	}
 }

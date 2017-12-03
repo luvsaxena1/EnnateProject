@@ -2,10 +2,13 @@ package io.ennate.controller;
 
 import java.util.List;
 
+import org.jeasy.rules.api.Facts;
+import org.jeasy.rules.api.Rules;
+import org.jeasy.rules.api.RulesEngine;
+import org.jeasy.rules.core.DefaultRulesEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,16 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.ennate.model.EmmulatorBO;
 import io.ennate.model.EmmulatorTimeRangeBO;
+import io.ennate.rule.WeightRule;
 import io.ennate.service.EmmulatorService;
 
 @RestController
 @RequestMapping("/v1/metric")
 public class MetricController {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(MetricController.class);
+
 	@Autowired
 	private EmmulatorService emmulatorService;
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(MetricController.class);
 
 	@RequestMapping(method = RequestMethod.POST, value = "/create", consumes = "application/json")
 	public ResponseEntity<Boolean> createEmmulatorData(@RequestBody EmmulatorBO emmulatorBO) {
@@ -35,6 +39,7 @@ public class MetricController {
 		Integer weightValue = emmulatorBO.getValue();
 		Boolean isSave = false;
 		if (timeStamp != null && weightValue != null) {
+			// runRule(emmulatorBO);
 			isSave = emmulatorService.saveEmmulatorData(emmulatorBO);
 		} else {
 			LOGGER.error(
@@ -52,7 +57,8 @@ public class MetricController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/readByTimeRange", consumes = "application/json")
-	public ResponseEntity<List<EmmulatorBO>> readEmmulatorDataByTimeRange(@RequestBody EmmulatorTimeRangeBO emmulatorTimeRangeBO) {
+	public ResponseEntity<List<EmmulatorBO>> readEmmulatorDataByTimeRange(
+			@RequestBody EmmulatorTimeRangeBO emmulatorTimeRangeBO) {
 		LOGGER.info(
 				"EmulatorController.readEmmulatorDataByTimeRange():: POST Request to get all matrics data between time startTime1={}, endTime={}",
 				emmulatorTimeRangeBO.getIntialTime(), emmulatorTimeRangeBO.getEndTime());
@@ -65,4 +71,14 @@ public class MetricController {
 		return responseEntity;
 	}
 
+	@SuppressWarnings("unused")
+	private static void runRule(EmmulatorBO emmulatorBO) {
+		Facts facts = new Facts();
+		facts.put("weight", emmulatorBO);
+		Rules rules = new Rules(new WeightRule());
+
+		// fire rules on known facts
+		RulesEngine rulesEngine = new DefaultRulesEngine();
+		rulesEngine.fire(rules, facts);
+	}
 }

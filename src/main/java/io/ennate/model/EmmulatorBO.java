@@ -4,11 +4,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EmmulatorBO {
-	
-	private Long timeStamp ;
-	
-	private Integer value;
 
+	private Long timeStamp;
+
+	private Integer value;
 
 	public Long getTimeStamp() {
 		return timeStamp;

@@ -3,7 +3,7 @@ package io.ennate.model;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EmmulatorTimeRangeBO {
+public class AlertTimeRangeBO {
 
 	private Long intialTime;
 
@@ -42,7 +42,7 @@ public class EmmulatorTimeRangeBO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EmmulatorTimeRangeBO other = (EmmulatorTimeRangeBO) obj;
+		AlertTimeRangeBO other = (AlertTimeRangeBO) obj;
 		if (endTime == null) {
 			if (other.endTime != null)
 				return false;
@@ -58,6 +58,7 @@ public class EmmulatorTimeRangeBO {
 
 	@Override
 	public String toString() {
-		return "EmmulatorTimeRangeBO [intialTime=" + intialTime + ", endTime=" + endTime + "]";
+		return "AlertTimeRangeBO [intialTime=" + intialTime + ", endTime=" + endTime + "]";
 	}
+
 }

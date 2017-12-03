@@ -15,7 +15,7 @@ public interface CrudRepository<T, ID extends Serializable> {
 	public Key<T> create(T entity);
 
 	public T read(ID id);
-	
+
 	public List<T> read();
 
 	public UpdateResults update(T entity, UpdateOperations<T> operations);

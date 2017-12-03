@@ -8,9 +8,9 @@ import io.ennate.model.EmmulatorBO;
 
 public interface EmmulatorService {
 
-	public ResponseEntity<List<EmmulatorBO>> getAllMatrics ();
-	
-	public Boolean saveEmmulatorData (EmmulatorBO emmulatorBO);
-	
-	public ResponseEntity<List<EmmulatorBO>> getMatricsByTimeRange (Long range1, Long range2);
+	public ResponseEntity<List<EmmulatorBO>> getAllMatrics();
+
+	public Boolean saveEmmulatorData(EmmulatorBO emmulatorBO);
+
+	public ResponseEntity<List<EmmulatorBO>> getMatricsByTimeRange(Long range1, Long range2);
 }
