@@ -24,9 +24,6 @@ public class AlertsRepositoryImpl extends BaseRepository<Alert, String> implemen
 
 	@Override
 	public List<Alert> getByTimeRange(Long startTime, Long endTime) {
-//		BasicDBObject rangeQuery = new BasicDBObject("timeStamp",  new BasicDBObject("$gte", startTime).append("$lte", endTime));
-//		DBCursor cursor = datastore.getCollection(Alert.class).find(rangeQuery);
-//		return cursorToList(cursor);
 		
 		Query<Alert> queryForMatrics = datastore.createQuery(Alert.class);
 		queryForMatrics.field("timeStamp").greaterThanOrEq(startTime);

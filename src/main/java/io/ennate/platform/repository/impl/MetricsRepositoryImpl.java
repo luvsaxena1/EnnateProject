@@ -1,16 +1,17 @@
 package io.ennate.platform.repository.impl;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCursor;
-import io.ennate.platform.entity.SensorMetrics;
-import io.ennate.platform.repository.IMetricsRepository;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
+
+import io.ennate.platform.entity.SensorMetrics;
+import io.ennate.platform.repository.IMetricsRepository;
 
 @Repository
 public class MetricsRepositoryImpl extends BaseRepository<SensorMetrics, String> implements IMetricsRepository {
