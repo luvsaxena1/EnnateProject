@@ -1,28 +1,31 @@
 package io.ennate.platform.rules;
 
-import io.ennate.platform.dto.AlertDto;
-import io.ennate.platform.dto.SensorMetricsDto;
-import io.ennate.platform.service.IAlertService;
 import org.jeasy.rules.annotation.Action;
 import org.jeasy.rules.annotation.Condition;
 import org.jeasy.rules.annotation.Fact;
 import org.jeasy.rules.annotation.Rule;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import io.ennate.platform.dto.AlertDto;
+import io.ennate.platform.dto.SensorMetricsDto;
+import io.ennate.platform.service.IAlertService;
+
+@Component
 @Rule(name = "Weight Rule", description = "Fires if the weight ways by more than 10 percent" )
 public class WeightRule {
 
-    @Autowired
+ 
     private IAlertService alertService;
 
     private SensorMetricsDto metric;
     private int baseWeight = 150;
 
     @Condition
-    public boolean weightRule(@Fact("sensorMetric") SensorMetricsDto dto) {
+    public boolean weightRule(@Fact("sensorMetric") SensorMetricsDto dto,@Fact("service") IAlertService alertService) {
         boolean isWeightDifferent = false;
         this.metric = dto;
+        this.alertService = alertService;
 
         int sensorWeight = dto.getValue();
         if (!StringUtils.isEmpty(sensorWeight)) {

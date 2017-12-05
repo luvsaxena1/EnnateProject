@@ -2,6 +2,7 @@ package io.ennate.platform.controller;
 
 import io.ennate.platform.dto.SensorMetricsDto;
 import io.ennate.platform.rules.WeightRule;
+import io.ennate.platform.service.IAlertService;
 import io.ennate.platform.service.IMetricsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +30,9 @@ public class MetricsController {
 
 	@Autowired
 	private IMetricsService service;
+	
+	@Autowired
+	private IAlertService alertService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MetricsController.class);
 
@@ -40,7 +44,7 @@ public class MetricsController {
 		LOGGER.info("MetricsController.save():: POST Request received with parameters timeStamp={},value={}",
 				resource.getTimeStamp(), resource.getValue());
 		if (!ObjectUtils.isEmpty(resource)) {
-			// runRule(resource);
+			 runRule(resource);
 			return service.save(resource);
 		} else {
 			throw new IllegalArgumentException("Invalid Metrics Object passed for Create: " + resource);
@@ -77,9 +81,10 @@ public class MetricsController {
 		return service.getMetricsByTimeRange(Long.parseLong(startDate), Long.parseLong(endDate));
 	}
 
-	private static void runRule(SensorMetricsDto dto) {
+	private void runRule(SensorMetricsDto dto) {
 		Facts facts = new Facts();
 		facts.put("sensorMetric", dto);
+		facts.put("service", alertService);
 		Rules rules = new Rules(new WeightRule());
 
 		// fire rules on known facts
