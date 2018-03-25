@@ -1,4 +1,4 @@
-# Innate Project
+# IOT Project
 Please follow the following steps to run the application :
 1. Run MongoDb
 2. MongoDB runs on [port 27017] by default
